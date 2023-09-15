@@ -1,8 +1,8 @@
-import taskClient from "../database/mongo_database.js";
+import TaskSchema from "../database/taskSchema.js";
 
 class CreateTask {
     static async create(req, res) {
-        const taskModel = new taskClient();
+        const taskModel = new TaskSchema();
         await taskModel.connect();
         await taskModel.createTask();
         await taskModel.close();
