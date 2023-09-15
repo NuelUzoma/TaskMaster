@@ -1,8 +1,8 @@
-import taskClient from "../database/mongo_database.js";
+import TaskSchema from "../database/taskSchema.js";
 
 class DeleteTask {
     static async deletes(req, res) {
-        const newModel = new taskClient();
+        const newModel = new TaskSchema();
         await newModel.connect();
         await newModel.deleteTask();
         await newModel.close();

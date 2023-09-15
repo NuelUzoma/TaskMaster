@@ -11,8 +11,10 @@
   "author": "Emmanuel Madubuike",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "esm": "^3.2.25",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongo": "^0.1.0",
     "sha1": "^1.1.1"
   }

@@ -1,18 +1,10 @@
-import { MongoClient } from 'mongodb';
+import client from './db_connection.js';
 
-// Host, Port and Database for MongoClient
-const host = 'localhost';
-const port = 27017;
-const database = 'taskmaster';
-
-// The URL to connect to the database
-const mongoUrl = `mongodb://${host}:${port}/${database}`;
-
-class TaskClient {
+class TaskSchema {
     constructor() {
-        this.client = new MongoClient(mongoUrl);
-        this.client.connect().then(() => {
-            this.db = this.client.db(database);
+        client.connect().then(() => {
+            this.db = client.db('taskmaster');
+            this.collection = this.db.collection('tasks');
             console.log("Connected to MongoDB Server");
         }).catch((error) => {
             console.error(error);
@@ -20,7 +12,7 @@ class TaskClient {
     }
 
     async connect() {
-        await this.client.connect(); // Return if the MongoDB is connected
+        await client.connect(); // Return if the MongoDB is connected
     }
 
     async tasksData() {
@@ -42,37 +34,37 @@ class TaskClient {
                 task: 'Get some morning sunlight'
             }
         ];
-        await this.db.collection('tasks').insertMany(newTasks);
+        await this.collection.insertMany(newTasks);
     }
 
     // Create Task definiton to create tasks
     async createTask(task) {
-        const result = await this.db.collection('tasks').insertOne(task);
+        const result = await this.collection.insertOne(task);
         return result;
     }
 
     // Retrieve Tasks from the database
     async retrieveTask(criteria) {
-        const result = await this.db.collection('tasks').findOne(criteria);
+        const result = await this.collection.findOne(criteria);
         return result;
     }
 
     // Update a task in the database
     async updateTask(task, update) {
-        const result = await this.db.collection('tasks').updateOne(task, { $set: update});
+        const result = await this.collection.updateOne(task, { $set: update});
         return result;
     }
 
     // delete a task from the database
     async deleteTask(task) {
-        const result = await this.db.collection('tasks').deleteOne(task);
+        const result = await this.collection.deleteOne(task);
         return result;
     }
 
     // Close the MongoClient connection
     async close() {
-        await this.client.close();
+        await client.close();
     }
 }
 
-export default TaskClient;
+export default TaskSchema;
