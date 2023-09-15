@@ -9,7 +9,7 @@ import RegisterUser from '../authentication/auth.js';
 
 const router = Router();
 
-// Five Basic Endpoints are to be defined for CRUD Operations
+// Endpoints are to be defined for CRUD Operations
 
 router.get('/tasks', RetrieveTask.retrieve);
 

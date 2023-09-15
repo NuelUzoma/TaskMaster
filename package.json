@@ -5,7 +5,8 @@
   "description": "This Write-Up is just the initial setup for the repository. A Comprehensive README.md will be written later on the course of this project.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "Emmanuel Madubuike",
@@ -17,5 +18,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongo": "^0.1.0",
     "sha1": "^1.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.49.0",
+    "eslint-plugin-es6": "^1.0.0",
+    "eslint-plugin-react": "^7.33.2"
   }
 }

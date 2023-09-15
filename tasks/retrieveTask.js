@@ -1,11 +1,11 @@
 import TaskSchema from "../database/taskSchema.js";
 
 class RetrieveTask {
-    static async retrieve(req, res) {
-        const taskModel = new TaskSchema();
-        await taskModel.connect();
+    static async retrieve(req, res) { // Callback GET method to retrieve a task
+        const taskModel = new TaskSchema(); // Instantiate the task schema
+        await taskModel.connect(); // Connect to the database
         await taskModel.retrieveTask();
-        await taskModel.close();
+        await taskModel.close(); // Close the connection
         res.status(200).json();
     }
 }

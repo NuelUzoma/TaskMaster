@@ -1,22 +1,25 @@
+// Import the client to connect to the tasks collection of the database
 import client from './db_connection.js';
 
+// The schema of the tasks collection
 class TaskSchema {
     constructor() {
         client.connect().then(() => {
+            // Connect to the tasks colection of the database
             this.db = client.db('taskmaster');
             this.collection = this.db.collection('tasks');
             console.log("Connected to MongoDB Server");
-        }).catch((error) => {
+        }).catch((error) => { // On error, it should throw an error
             console.error(error);
         });
     }
 
     async connect() {
-        await client.connect(); // Return if the MongoDB is connected
+        await client.connect(); // This method connects to the database
     }
 
     async tasksData() {
-        const newTasks = [
+        const newTasks = [ // An array of sample tasks to test the tasks collection
             {
                 id: 1,
                 task: 'Pray After Waking Up'
@@ -34,7 +37,7 @@ class TaskSchema {
                 task: 'Get some morning sunlight'
             }
         ];
-        await this.collection.insertMany(newTasks);
+        await this.collection.insertMany(newTasks); // Inserts the array of tasks into the collection
     }
 
     // Create Task definiton to create tasks
