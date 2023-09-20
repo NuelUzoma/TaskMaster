@@ -15,9 +15,9 @@ router.get('/tasks', RetrieveTask.retrieve);
 
 router.post('/tasks', CreateTask.create);
 
-router.put('/tasks/:id', UpdateTask.update);
+router.put('/tasks/update/:id', UpdateTask.update);
 
-router.delete('/tasks/:id', DeleteTask.deletes);
+router.delete('/tasks/delete/:id', DeleteTask.deletes);
 
 router.post('/register', RegisterUser.register);
 

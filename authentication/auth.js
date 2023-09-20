@@ -7,7 +7,9 @@ class RegisterUser {
         // Register a new user 
         try {
             const {username, email, password} = req.body;
-            const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
+            const saltRounds = 10;
+            const salt = await bcrypt.genSalt(saltRounds);
+            const hashedPassword = await bcrypt.hash(password, salt); // Hash the password using bcrypt
             const userData = new UserSchema(); // Instantiate the user schema, to be used in this method
             await userData.connect();
             const userId = await userData.createUser({
@@ -34,11 +36,12 @@ class RegisterUser {
             const {username, password} = req.body;
             const userData = new UserSchema(); // Instantiate the user schema
             // Check the username input if it corresponds with the database
-            const user = userData.findUserByUsername(username);
+            const user = await userData.findUserByUsername(username);
             if (!user) {
                 res.status(401).json({
                     error: "Invalid username or password"
                 });
+                return;
             }
             // Check password match using bcrypt
             const passwordMatch = await bcrypt.compare(password, user.password);
@@ -46,6 +49,7 @@ class RegisterUser {
                 res.status(401).json({
                     error: "Invalid username or password"
                 });
+                return;
             }
             // JWT Authentication for successful user login.
             const sec_key = process.env.JWTSECRETKEY;

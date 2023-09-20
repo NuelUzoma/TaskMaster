@@ -1,51 +1,52 @@
 // Import the client to connect to the tasks collection of the database
 import client from './db_connection.js';
+import { ObjectId } from 'mongodb';
 
 const newTasks = [ // An array of sample tasks to test the tasks collection
     {
-        id: 1,
+        _id: 1,
         title: 'CV Completion',
         description: 'Complete building my resume to apply for jobs',
         completed: false
     },
     {
-        id: 2,
+        _id: 2,
         title: 'Complete Task 1',
         description: 'Finish the first task on the task list',
         completed: false
     },
     {
-        id: 3,
+        _id: 3,
         title: 'Round-Up Specializations Project',
         description: 'Complete the final project for ALX Africa',
         completed: false
     },
     {
-        id: 4,
+        _id: 4,
         title: 'Purchase Groceries',
         description: 'Purchase groceries from the market',
         completed: false
     },
     {
-        id: 5,
+        _id: 5,
         title: 'Morning Exercise',
         description: 'Complete 30 min workout every morning',
         completed: false
     },
     {
-        id: 6,
+        _id: 6,
         title: 'School Resumption',
         description: 'Resume with school activities in a shortwhile',
         completed: false
     },
     {
-        id: 7,
+        _id: 7,
         title: 'Write Blog Post',
         description: 'Complete an extensive blog post for this TaskMaster project',
         completed: false
     },
     {
-        id: 8,
+        _id: 8,
         title: 'Comprehensive README.md',
         description: 'Complete a comprehensive README.md for this project',
         completed: false
@@ -86,15 +87,41 @@ class TaskSchema {
     }
 
     // Update a task in the database
-    async updateTask(task, update) {
-        const result = await this.collection.updateOne(task, { $set: update});
-        return result;
+    async updateTask(taskId, update) {
+        try {
+            const result = await this.collection.updateOne(
+                {
+                    _id: new ObjectId(taskId)
+                },
+                {
+                    $set: update
+                });
+            return result;
+        } catch (error) {
+            console.error('Updating task failed: ', error);
+        }
     }
 
     // delete a task from the database
-    async deleteTask(task) {
-        const result = await this.collection.deleteOne(task);
-        return result;
+    async deleteTask(taskId) {
+        try {
+            console.log('Deleting task with ID: ', taskId);
+
+            // Trim any trailing space from the task ID
+            const trimmedTaskId = taskId.trim();
+
+            if(trimmedTaskId.length !== 24 || !/^[0-9a-fA-F]+$/.test(trimmedTaskId)) {
+                throw new Error('Invalid input for taskId')
+            }
+
+            const result = await this.collection.deleteOne({
+                _id: new ObjectId(trimmedTaskId)
+            });
+            return result;
+        } catch (error) {
+            console.error('Error deleting task from database: ', error);
+            throw error;
+        }
     }
 
     // Change the completion status of a task

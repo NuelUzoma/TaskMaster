@@ -9,6 +9,7 @@ class RetrieveTask {
             await taskModel.close(); // Close the connection
             res.status(200).json();
         } catch (error) {
+            console.error('Error retrieving task: ', error);
             res.status(500).json({
                 error: 'An error occured retrieving the task'
             });

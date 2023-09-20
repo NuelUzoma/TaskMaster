@@ -1,6 +1,6 @@
 // Import the client to connect to the users collection of the database
 import client from "./db_connection.js";
-import ObjectId from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 class UserSchema {
     constructor() {
@@ -48,7 +48,9 @@ class UserSchema {
     async findUserByUsername(username) {
         // Find a user by its username
         try{
-            const user = await this.collection.findOne(username);
+            const user = await this.collection.findOne({
+                username: username
+            });
             return user;
         } catch (error) {
             console.error("Error finding user by username: ", error);
