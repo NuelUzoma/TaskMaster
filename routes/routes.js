@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-// defined tasks endpoints are defined and imported 
+// Defined tasks endpoints are defined and imported 
 import CreateTask from '../tasks/createTask.js';
 import RetrieveTask from '../tasks/retrieveTask.js';
 import UpdateTask from '../tasks/updateTask.js';
@@ -11,22 +11,22 @@ const router = Router();
 
 // Endpoints are to be defined for CRUD Operations
 
-router.get('/tasks', RetrieveTask.retrieve);
+router.get('/tasks', RetrieveTask.retrieve); // retrieve callback method to get all users
 
-router.get('/tasks/retrieve/:id', RetrieveTask.retrieveId);
+router.get('/tasks/retrieve/:id', RetrieveTask.retrieveId); // retrieveId callback method to get users by Id
 
-router.post('/tasks/create', CreateTask.create);
+router.post('/tasks/create', CreateTask.create); // create CRUD method to create a new task
 
-router.put('/tasks/update/:id', UpdateTask.update);
+router.put('/tasks/update/:id', UpdateTask.update); // update CRUD method to update an existing task
 
-router.delete('/tasks/delete/:id', DeleteTask.deletes);
+router.delete('/tasks/delete/:id', DeleteTask.deletes);// deletes method to delete an existing task
 
-router.post('/register', RegisterUser.register);
+router.post('/register', RegisterUser.register);// register method to registera new user
 
-router.post('/login', RegisterUser.login);
+router.post('/login', RegisterUser.login);// login method to login
 
-router.get('/users', RegisterUser.user);
+router.get('/users', RegisterUser.user);// user method to retrieve all users from the database
 
-router.get('/users/:id', RegisterUser.userId);
+router.get('/users/:id', RegisterUser.userId);// userId method to retrieve all users by its Id
 
 export default router;

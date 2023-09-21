@@ -37,8 +37,9 @@ class UserSchema {
                 throw new Error('User insertion failed');
             }
         } catch (error) {
-                console.error("Error creating user: ", error);
-                throw error;
+            // Error Handling
+            console.error("Error creating user: ", error);
+            throw error;
         }
     }
 
@@ -47,9 +48,12 @@ class UserSchema {
         // Find a user by its user_id
         try {
             // Convert the user id into a MongoDB ObjectId type to send the unique query
-            const user = await this.collection.findOne({_id: new ObjectId(userId)});
+            const user = await this.collection.findOne({
+                _id: new ObjectId(userId)
+            });
             return user;
         } catch (error) {
+            // Error Handling
             console.error("Error finding user: ", error);
         }
     }
@@ -62,6 +66,7 @@ class UserSchema {
             });
             return user;
         } catch (error) {
+            // Error Handling
             console.error("Error finding user by username: ", error);
         }
     }
@@ -69,9 +74,10 @@ class UserSchema {
     async getUsers() {
         // Get all users in the database
         try {
-            const result = await this.collection.find().toArray();
+            const result = await this.collection.find().toArray(); // Retrieve Users from the database
             return result;
         } catch (error) {
+            // Error Handling
             console.error('Error getting users: ', error);
         }
     }
@@ -84,6 +90,7 @@ class UserSchema {
             const trimmedUserId = usersId.trim();
 
             if(trimmedUserId.length !== 24 || !/^[0-9a-fA-F]+$/.test(trimmedUserId)) {
+                // Checks if it is 24 in length and makes use of Regex to check
                 throw new Error('Invalid input for taskId')
             }
 
@@ -92,6 +99,7 @@ class UserSchema {
             });
             return result;
         } catch (error) {
+            // Error Handling
             console.error('Error retrieving user: ', error);
         }
     }

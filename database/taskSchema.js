@@ -85,13 +85,13 @@ class TaskSchema {
 
     // Create Task definiton to create tasks
     async createTask(task) {
-        const result = await this.collection.insertOne(task);
+        const result = await this.collection.insertOne(task); // Inserts a task into the database
         return result;
     }
 
     // Retrieve Tasks from the database
     async retrieveTask() {
-        const result = await this.collection.find().toArray();
+        const result = await this.collection.find().toArray(); // Retrieve tasks from the database
         return result;
     }
 
@@ -104,6 +104,7 @@ class TaskSchema {
             const trimmedTaskId = taskId.trim();
 
             if(trimmedTaskId.length !== 24 || !/^[0-9a-fA-F]+$/.test(trimmedTaskId)) {
+                // Checks if it is 24 in length and makes use of Regex to check
                 throw new Error('Invalid input for taskId')
             }
 
@@ -112,6 +113,7 @@ class TaskSchema {
             });
             return result;
         } catch (error) {
+            // Error Handling
             console.log('Error retrieving task: ', error);
             throw error;
         }
@@ -126,6 +128,7 @@ class TaskSchema {
             const trimmedTaskId = taskId.trim();
 
             if(trimmedTaskId.length !== 24 || !/^[0-9a-fA-F]+$/.test(trimmedTaskId)) {
+                // Checks if it is 24 in length and makes use of Regex to check
                 throw new Error('Invalid input for taskId')
             }
 
@@ -138,6 +141,7 @@ class TaskSchema {
                 });
             return result;
         } catch (error) {
+            // Error Handling
             console.error('Updating task failed: ', error);
             throw error;
         }
@@ -152,6 +156,7 @@ class TaskSchema {
             const trimmedTaskId = taskId.trim();
 
             if(trimmedTaskId.length !== 24 || !/^[0-9a-fA-F]+$/.test(trimmedTaskId)) {
+                // Checks if it is 24 in length and makes use of Regex to check
                 throw new Error('Invalid input for taskId')
             }
 
@@ -160,6 +165,7 @@ class TaskSchema {
             });
             return result;
         } catch (error) {
+            // Error Handling
             console.error('Error deleting task from database: ', error);
             throw error;
         }

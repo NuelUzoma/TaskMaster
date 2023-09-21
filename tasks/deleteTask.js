@@ -10,6 +10,7 @@ class DeleteTask {
             await newModel.close(); // Close the connection
 
             if (result && result.deletedCount === 1) {
+                // Confirms if the taskId has been deleted
                 res.status(200).json({
                     message: 'Task has been deleted successfully'
                 });
@@ -19,6 +20,7 @@ class DeleteTask {
                 });
             }
         } catch (error) {
+            // Error Handling
             console.error('Error deleting task: ', error);
             res.status(500).json({
                 error: 'An error occured deleting the task'
