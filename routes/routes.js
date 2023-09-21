@@ -25,4 +25,8 @@ router.post('/register', RegisterUser.register);
 
 router.post('/login', RegisterUser.login);
 
+router.get('/users', RegisterUser.user);
+
+router.get('/users/:id', RegisterUser.userId);
+
 export default router;

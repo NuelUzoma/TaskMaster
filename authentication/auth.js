@@ -74,6 +74,47 @@ class RegisterUser {
             });
         }
     }
+
+    static async user(req, res) {
+        try {
+            const userData = new UserSchema();
+            await userData.connect();
+            const users = await userData.getUsers();
+            await userData.close();
+            res.status(200).json(users);
+        } catch (error) {
+            console.error('Error retrieving users');
+            res.status(500).json({
+                error: 'Internal server error'
+            });
+        }
+    }
+
+    static async userId(req, res) {
+        try {
+            const usersId = req.params.id;
+            const userData = new UserSchema();
+            await userData.connect();
+            const result = await userData.getUserId(usersId);
+            await userData.close();
+
+            if (result) {
+                res.status(200).json({
+                    message: 'User has been retrieved successfully',
+                    user: result
+                });
+            } else {
+                res.status(404).json({
+                    error: 'User not found'
+                });
+            }
+        } catch (error) {
+            console.error('Error retrieving user by ID: ', error);
+            res.status(500).json({
+                error: 'Internal server error'
+            });
+        }
+    }
 }
 
 export default RegisterUser;

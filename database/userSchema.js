@@ -66,6 +66,36 @@ class UserSchema {
         }
     }
 
+    async getUsers() {
+        // Get all users in the database
+        try {
+            const result = await this.collection.find().toArray();
+            return result;
+        } catch (error) {
+            console.error('Error getting users: ', error);
+        }
+    }
+
+    async getUserId(usersId) {
+        try {
+            console.log('Retrieving users by ID: ', usersId);
+
+            // Trim any trailing space from the task ID
+            const trimmedUserId = usersId.trim();
+
+            if(trimmedUserId.length !== 24 || !/^[0-9a-fA-F]+$/.test(trimmedUserId)) {
+                throw new Error('Invalid input for taskId')
+            }
+
+            const result = await this.collection.findOne({
+                _id: new ObjectId(trimmedUserId)
+            });
+            return result;
+        } catch (error) {
+            console.error('Error retrieving user: ', error);
+        }
+    }
+
     async close() {
         // Close the mongodb connection
         await client.close();
