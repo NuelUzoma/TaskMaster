@@ -1,6 +1,6 @@
 // Import the client to connect to the users collection of the database
-import client from "./db_connection.js";
-import ObjectId from 'mongodb';
+import client from './db_connection.js';
+import { ObjectId } from 'mongodb';
 
 class UserSchema {
     constructor() {
@@ -26,13 +26,22 @@ class UserSchema {
                 email,
                 password
             };
+
             // Inserts the new user into the collection
             const result = await this.collection.insertOne(newUser);
-            return result.insertedId;
+
+
+            if (result) {
+                return result.insertedId;
+            } else {
+                throw new Error('User insertion failed');
+            }
         } catch (error) {
-            console.error("Error creating user: ", error);
+                console.error("Error creating user: ", error);
+                throw error;
         }
     }
+
 
     async findUserById(userId) {
         // Find a user by its user_id
@@ -48,7 +57,9 @@ class UserSchema {
     async findUserByUsername(username) {
         // Find a user by its username
         try{
-            const user = await this.collection.findOne(username);
+            const user = await this.collection.findOne({
+                username: username
+            });
             return user;
         } catch (error) {
             console.error("Error finding user by username: ", error);

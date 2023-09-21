@@ -13,11 +13,13 @@ const router = Router();
 
 router.get('/tasks', RetrieveTask.retrieve);
 
-router.post('/tasks', CreateTask.create);
+router.get('/tasks/retrieve/:id', RetrieveTask.retrieveId);
 
-router.put('/tasks/:id', UpdateTask.update);
+router.post('/tasks/create', CreateTask.create);
 
-router.delete('/tasks/:id', DeleteTask.deletes);
+router.put('/tasks/update/:id', UpdateTask.update);
+
+router.delete('/tasks/delete/:id', DeleteTask.deletes);
 
 router.post('/register', RegisterUser.register);
 

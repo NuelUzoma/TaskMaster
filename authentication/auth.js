@@ -1,13 +1,19 @@
 import bcrypt from 'bcrypt'; // Used for authentication
 import UserSchema from "../database/userSchema.js";
 import Jwt from 'jsonwebtoken'; // Send a token to the user for authentication
+import dotenv from 'dotenv'; // Import the dotenv module
+
+dotenv.config(); // Load environment variables from .env file for JWT secret key
+
 
 class RegisterUser {
     static async register(req, res) { // Callback method used in the routes middleware
         // Register a new user 
         try {
             const {username, email, password} = req.body;
-            const hashedPassword = await bcrypt.hash(password, 10); // Hash the password using bcrypt
+            const saltRounds = 10;
+            const salt = await bcrypt.genSalt(saltRounds);
+            const hashedPassword = await bcrypt.hash(password, salt); // Hash the password using bcrypt
             const userData = new UserSchema(); // Instantiate the user schema, to be used in this method
             await userData.connect();
             const userId = await userData.createUser({
@@ -33,12 +39,14 @@ class RegisterUser {
         try {
             const {username, password} = req.body;
             const userData = new UserSchema(); // Instantiate the user schema
+            await userData.connect();
             // Check the username input if it corresponds with the database
-            const user = userData.findUserByUsername(username);
+            const user = await userData.findUserByUsername(username);
             if (!user) {
                 res.status(401).json({
                     error: "Invalid username or password"
                 });
+                return;
             }
             // Check password match using bcrypt
             const passwordMatch = await bcrypt.compare(password, user.password);
@@ -46,17 +54,19 @@ class RegisterUser {
                 res.status(401).json({
                     error: "Invalid username or password"
                 });
+                return;
             }
             // JWT Authentication for successful user login.
-            const sec_key = process.env.JWTSECRETKEY;
+            const sec_key = process.env.JWT_SECRET;
             const token = Jwt.sign(
                 { userId: user._id },
                 sec_key,
-                { expiresIn: '1h'
-            });
+                { expiresIn: '1h'}
+                );
             res.status(200).json({
                 token
             });
+            await userData.close();
         } catch (error) {
             console.error("Error loggining in: ", error);
             res.status(500).json({
