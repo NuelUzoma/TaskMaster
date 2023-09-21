@@ -13,7 +13,9 @@ const router = Router();
 
 router.get('/tasks', RetrieveTask.retrieve);
 
-router.post('/tasks', CreateTask.create);
+router.get('/tasks/retrieve/:id', RetrieveTask.retrieveId);
+
+router.post('/tasks/create', CreateTask.create);
 
 router.put('/tasks/update/:id', UpdateTask.update);
 

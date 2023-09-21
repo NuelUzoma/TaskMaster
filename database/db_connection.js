@@ -2,7 +2,7 @@
 import { MongoClient } from 'mongodb';
 
 // Host, Port and Database for MongoClient
-const host = 'localhost';
+const host = '127.0.0.1';
 const port = 27017;
 const database = 'taskmaster';
 

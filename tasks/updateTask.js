@@ -12,7 +12,7 @@ class UpdateTask {
 
             if (result && result.modifiedCount === 1) {
                 res.status(200).json({
-                    title: 'Task has been updated'
+                    message: 'Task has been updated successfully'
                 });
             } else {
                 res.status(404).json({

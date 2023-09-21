@@ -6,7 +6,7 @@ class CreateTask {
             const taskModel = new TaskSchema(); // Instantiate the task schema
             await taskModel.connect(); // Connect to the database
             const task = { // Task to be created to the database
-                _id: 9,
+                id: 9,
                 title: 'Test the Create Function',
                 description: 'Testing the Create CRUD Function',
                 completed: true

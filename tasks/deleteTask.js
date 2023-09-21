@@ -4,7 +4,6 @@ class DeleteTask {
     static async deletes(req, res) { // Callback DELETE method to delete a task
         try {
             const taskId = req.params.id; // Get the task ID from the request parameters
-            console.log('Deleting task: ', taskId);
             const newModel = new TaskSchema(); // Instantiate the task schema
             await newModel.connect(); // Connect to the database
             const result = await newModel.deleteTask(taskId);

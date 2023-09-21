@@ -4,51 +4,57 @@ import { ObjectId } from 'mongodb';
 
 const newTasks = [ // An array of sample tasks to test the tasks collection
     {
-        _id: 1,
-        title: 'CV Completion',
+        id: 19,
+        title: 'Finish project',
         description: 'Complete building my resume to apply for jobs',
         completed: false
     },
     {
-        _id: 2,
-        title: 'Complete Task 1',
+        id: 20,
+        title: 'Complete Task 2',
         description: 'Finish the first task on the task list',
         completed: false
     },
     {
-        _id: 3,
+        id: 21,
         title: 'Round-Up Specializations Project',
         description: 'Complete the final project for ALX Africa',
         completed: false
     },
     {
-        _id: 4,
+        id: 22,
         title: 'Purchase Groceries',
         description: 'Purchase groceries from the market',
         completed: false
     },
     {
-        _id: 5,
+        id: 23,
         title: 'Morning Exercise',
         description: 'Complete 30 min workout every morning',
         completed: false
     },
     {
-        _id: 6,
+        id: 24,
         title: 'School Resumption',
         description: 'Resume with school activities in a shortwhile',
         completed: false
     },
     {
-        _id: 7,
+        id: 25,
         title: 'Write Blog Post',
         description: 'Complete an extensive blog post for this TaskMaster project',
         completed: false
     },
     {
-        _id: 8,
+        id: 26,
         title: 'Comprehensive README.md',
         description: 'Complete a comprehensive README.md for this project',
+        completed: false
+    },
+    {
+        id: 27,
+        title: 'Test',
+        description: 'Testing',
         completed: false
     }
 ];
@@ -61,17 +67,20 @@ class TaskSchema {
             this.db = client.db('taskmaster');
             this.collection = this.db.collection('tasks');
             console.log("Connected to MongoDB Server");
+            return this.collection.insertMany(newTasks);
         }).catch((error) => { // On error, it should throw an error
             console.error(error);
         });
     }
 
     async connect() {
-        await client.connect(); // This method connects to the database
+        const result = await client.connect(); // This method connects to the database
+        return result;
     }
 
     async tasksData() {
-        await this.collection.insertMany(newTasks); // Inserts the array of tasks into the collection
+        const result = await this.collection.insertMany(newTasks); // Inserts the array of tasks into the collection
+        return result;
     }
 
     // Create Task definiton to create tasks
@@ -81,17 +90,48 @@ class TaskSchema {
     }
 
     // Retrieve Tasks from the database
-    async retrieveTask(criteria) {
-        const result = await this.collection.findOne(criteria);
+    async retrieveTask() {
+        const result = await this.collection.find().toArray();
         return result;
+    }
+
+    // Retrieve Tasks by ID from the database
+    async retrieveTaskId(taskId) {
+        try {
+            console.log('Retrieving task with ID: ', taskId);
+
+            // Trim any trailing space from the task ID
+            const trimmedTaskId = taskId.trim();
+
+            if(trimmedTaskId.length !== 24 || !/^[0-9a-fA-F]+$/.test(trimmedTaskId)) {
+                throw new Error('Invalid input for taskId')
+            }
+
+            const result = await this.collection.findOne({
+                _id: new ObjectId(trimmedTaskId)
+            });
+            return result;
+        } catch (error) {
+            console.log('Error retrieving task: ', error);
+            throw error;
+        }
     }
 
     // Update a task in the database
     async updateTask(taskId, update) {
         try {
+            console.log('Updating task with ID: ', taskId);
+
+            // Trim any trailing space from the task ID
+            const trimmedTaskId = taskId.trim();
+
+            if(trimmedTaskId.length !== 24 || !/^[0-9a-fA-F]+$/.test(trimmedTaskId)) {
+                throw new Error('Invalid input for taskId')
+            }
+
             const result = await this.collection.updateOne(
                 {
-                    _id: new ObjectId(taskId)
+                    _id: new ObjectId(trimmedTaskId)
                 },
                 {
                     $set: update
@@ -99,6 +139,7 @@ class TaskSchema {
             return result;
         } catch (error) {
             console.error('Updating task failed: ', error);
+            throw error;
         }
     }
 
