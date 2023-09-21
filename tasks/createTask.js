@@ -17,6 +17,7 @@ class CreateTask {
                 message: 'Task has been created'
             });
         } catch (error) {
+            // Error Handling
             console.error('Error creating task: ', error);
             res.status(500).json({
                 error: 'An error occured creating the task'

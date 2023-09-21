@@ -24,9 +24,10 @@ class RegisterUser {
             await userData.close(); // Close the database connection
             res.status(201).json({
                 message: "User registered successfully",
-                userId
+                userId // Displays the ID of the registered user
             });
         } catch (error) {
+            // Error Handling
             console.error("Error registering user: ", error);
             res.status(500).json({
                 error: "Internal server error"
@@ -43,6 +44,7 @@ class RegisterUser {
             // Check the username input if it corresponds with the database
             const user = await userData.findUserByUsername(username);
             if (!user) {
+                // Validate username
                 res.status(401).json({
                     error: "Invalid username or password"
                 });
@@ -51,6 +53,7 @@ class RegisterUser {
             // Check password match using bcrypt
             const passwordMatch = await bcrypt.compare(password, user.password);
             if (!passwordMatch) {
+                // Validate password
                 res.status(401).json({
                     error: "Invalid username or password"
                 });
@@ -58,7 +61,7 @@ class RegisterUser {
             }
             // JWT Authentication for successful user login.
             const sec_key = process.env.JWT_SECRET;
-            const token = Jwt.sign(
+            const token = Jwt.sign( // Generate a token for signing in
                 { userId: user._id },
                 sec_key,
                 { expiresIn: '1h'}
@@ -66,8 +69,9 @@ class RegisterUser {
             res.status(200).json({
                 token
             });
-            await userData.close();
+            await userData.close(); // Close the database connection
         } catch (error) {
+            // Error Handling
             console.error("Error loggining in: ", error);
             res.status(500).json({
                 error: "Internal server error"
@@ -76,13 +80,15 @@ class RegisterUser {
     }
 
     static async user(req, res) {
+        // Retrieve all the users from the database
         try {
-            const userData = new UserSchema();
-            await userData.connect();
-            const users = await userData.getUsers();
-            await userData.close();
+            const userData = new UserSchema(); // Instantiate the database schema
+            await userData.connect(); // Connect to the database
+            const users = await userData.getUsers(); // Get the users which will be displayed as response
+            await userData.close(); // Close the database connection
             res.status(200).json(users);
         } catch (error) {
+            // Error Handling
             console.error('Error retrieving users');
             res.status(500).json({
                 error: 'Internal server error'
@@ -91,17 +97,18 @@ class RegisterUser {
     }
 
     static async userId(req, res) {
+        // Retrieve users from the database from its ID
         try {
-            const usersId = req.params.id;
-            const userData = new UserSchema();
-            await userData.connect();
-            const result = await userData.getUserId(usersId);
-            await userData.close();
+            const usersId = req.params.id; // Retrieve the ID from the parameters
+            const userData = new UserSchema(); // Instantiate the database schema
+            await userData.connect(); // Connect to the database
+            const result = await userData.getUserId(usersId); // Get the User from its ID
+            await userData.close(); // Close the connection
 
             if (result) {
                 res.status(200).json({
                     message: 'User has been retrieved successfully',
-                    user: result
+                    user: result // Display the User details in the response
                 });
             } else {
                 res.status(404).json({
@@ -109,6 +116,7 @@ class RegisterUser {
                 });
             }
         } catch (error) {
+            // Error Handling
             console.error('Error retrieving user by ID: ', error);
             res.status(500).json({
                 error: 'Internal server error'

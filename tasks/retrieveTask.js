@@ -9,6 +9,7 @@ class RetrieveTask {
             await taskModel.close(); // Close the connection
             res.status(200).json(tasks);
         } catch (error) {
+            // Error Handling
             console.error('Error retrieving task: ', error);
             res.status(500).json({
                 error: 'An error occured retrieving the task'
@@ -17,12 +18,12 @@ class RetrieveTask {
     }
 
     static async retrieveId(req, res) {
-        try{ // callback method to retrieve a task by ID
+        try{ // Callback method to retrieve a task by ID
             const taskId = req.params.id; // Get the ID from the parameters
             const taskModel = new TaskSchema(); // Instantiate a new instance of the schema
             await taskModel.connect(); // Connect to the database
             const result = await taskModel.retrieveTaskId(taskId); // Get the result from the taskId
-            await taskModel.close(); // close the database connection
+            await taskModel.close(); // Close the database connection
 
             if (result) {
                 res.status(200).json({
@@ -35,6 +36,7 @@ class RetrieveTask {
                 });
             }
         } catch (error) {
+            // Error Handling
             console.error('Error retrieving task by ID: ', error);
             res.status(500).json({
                 error: 'Internal server error'
