@@ -8,7 +8,9 @@ class UserSchema {
             // Connect to the users collection of the database
             this.db = client.db('taskmaster');
             this.collection = this.db.collection('users');
-            console.log("Connected to MongoDB Server")
+            // Create a unique index on the 'email' and 'username' field
+            this.collection.createIndex({ email: 1, username: 1 }, { unique: true });
+            console.log("Connected to MongoDB Server");
         }).catch((error) => {
             console.error(error); // On error, it should throw an error
         });
@@ -30,7 +32,6 @@ class UserSchema {
             // Inserts the new user into the collection
             const result = await this.collection.insertOne(newUser);
 
-
             if (result) {
                 return result.insertedId;
             } else {
@@ -38,8 +39,12 @@ class UserSchema {
             }
         } catch (error) {
             // Error Handling
-            console.error("Error creating user: ", error);
-            throw error;
+            if (error.code === 11000) {
+                throw new Error('User with the same username or email already exists');
+            } else {
+                console.error("Error creating user: ", error);
+                throw error;
+            }
         }
     }
 
