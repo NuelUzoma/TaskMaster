@@ -9,7 +9,7 @@ import RegisterUser from '../authentication/auth.js';
 
 const router = Router();
 
-// Endpoints are to be defined for CRUD Operations
+// Endpoints for CRUD Operations
 
 router.get('/tasks', RetrieveTask.retrieve); // retrieve callback method to get all users
 
@@ -21,7 +21,9 @@ router.put('/tasks/update/:id', UpdateTask.update); // update CRUD method to upd
 
 router.delete('/tasks/delete/:id', DeleteTask.deletes);// deletes method to delete an existing task
 
-router.post('/register', RegisterUser.register);// register method to registera new user
+// Endpoints of users, registration and login
+
+router.post('/register', RegisterUser.register);// register method to register a new user
 
 router.post('/login', RegisterUser.login);// login method to login
 
