@@ -10,6 +10,9 @@
     "test": "mocha",
     "lint": "eslint ."
   },
+  "engines": {
+    "node": ">=15"
+  },
   "keywords": [],
   "author": "Emmanuel Madubuike",
   "license": "MIT",
