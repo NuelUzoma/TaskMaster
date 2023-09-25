@@ -48,21 +48,6 @@ class UserSchema {
         }
     }
 
-
-    async findUserById(userId) {
-        // Find a user by its user_id
-        try {
-            // Convert the user id into a MongoDB ObjectId type to send the unique query
-            const user = await this.collection.findOne({
-                _id: new ObjectId(userId)
-            });
-            return user;
-        } catch (error) {
-            // Error Handling
-            console.error("Error finding user: ", error);
-        }
-    }
-
     async findUserByUsername(username) {
         // Find a user by its username
         try{
@@ -90,6 +75,11 @@ class UserSchema {
     async getUserId(usersId) {
         try {
             console.log('Retrieving users by ID: ', usersId);
+
+            // Check if taskId is defined
+            if (usersId === undefined) {
+                throw new Error('User ID is undefined');
+            }
 
             // Trim any trailing space from the task ID
             const trimmedUserId = usersId.trim();

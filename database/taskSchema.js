@@ -100,6 +100,11 @@ class TaskSchema {
         try {
             console.log('Retrieving task with ID: ', taskId);
 
+            // Check if taskId is defined
+            if (taskId === undefined) {
+                throw new Error('Task ID is undefined');
+            }
+
             // Trim any trailing space from the task ID
             const trimmedTaskId = taskId.trim();
 
@@ -123,6 +128,11 @@ class TaskSchema {
     async updateTask(taskId, update) {
         try {
             console.log('Updating task with ID: ', taskId);
+
+            // Check if taskId is defined
+            if (taskId === undefined) {
+                throw new Error('Task ID is undefined');
+            }
 
             // Trim any trailing space from the task ID
             const trimmedTaskId = taskId.trim();
@@ -151,6 +161,11 @@ class TaskSchema {
     async deleteTask(taskId) {
         try {
             console.log('Deleting task with ID: ', taskId);
+
+            // Check if taskId is defined
+            if (taskId === undefined) {
+                throw new Error('Task ID is undefined');
+            }
 
             // Trim any trailing space from the task ID
             const trimmedTaskId = taskId.trim();
