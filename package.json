@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node main_server.js",
+    "build": "npm install",
     "test": "mocha",
     "lint": "eslint ."
   },
