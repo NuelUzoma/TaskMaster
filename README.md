@@ -93,11 +93,11 @@ To use the TaskMaster API, you can make HTTP requests to the provided endpoints.
 
 
 - **Retrieve Users**
-  - `GET api/users`: Retrieve all users.
+  - `GET /api/users`: Retrieve all users.
 
 
 - **Retrieve Users by ID**
-  - `GET api/users/:id`: Retrieve a user by ID.
+  - `GET /api/users/:id`: Retrieve a user by ID.
 
 
 - **Task Management:**
