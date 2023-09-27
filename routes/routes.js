@@ -11,9 +11,9 @@ const router = Router();
 
 // Endpoints for CRUD Operations
 
-router.get('/api/tasks', RetrieveTask.retrieve); // retrieve callback method to get all users
+router.get('/api/tasks', RetrieveTask.retrieve); // retrieve callback method to get all tasks
 
-router.get('/api/tasks/retrieve/:id', RetrieveTask.retrieveId); // retrieveId callback method to get users by Id
+router.get('/api/tasks/retrieve/:id', RetrieveTask.retrieveId); // retrieveId callback method to get tasks by Id
 
 router.post('/api/tasks/create', CreateTask.create); // create CRUD method to create a new task
 
