@@ -1,5 +1,9 @@
 // Import the mongo client to create the connection
 import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv'; // Import the dotenv module
+
+dotenv.config(); // Load environment variables from .env file for MongoDB URI
+
 
 // Host, Port and Database for MongoClient
 // const host = '127.0.0.1';
@@ -9,7 +13,7 @@ import { MongoClient } from 'mongodb';
 // The URL to connect to the database
 // const mongoUrl = `mongodb://${host}:${port}/${database}`;
 
-const mongoUri = "mongodb+srv://Optimus_Prime:O1NptfbGceCQIr2m@cluster0.v3htiwa.mongodb.net/taskmaster?retryWrites=true&w=majority"
+const mongoUri = process.env.MONGODB_URI;
 
 // Instantiate a new function of the connection and export to tasks and users
 const client = new MongoClient(mongoUri);

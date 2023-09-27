@@ -24,6 +24,8 @@ class TaskSchema {
             // Connect to the tasks colection of the database
             this.db = client.db('taskmaster');
             this.collection = this.db.collection('tasks');
+            // Create a unique index for the id and title
+            this.collection.createIndex({ id: 1, title: 1 }, { unique: true });
             console.log("Connected to MongoDB Server");
         }).catch((error) => { // On error, it should throw an error
             console.error(error);
@@ -42,8 +44,18 @@ class TaskSchema {
 
     // Create Task definiton to create tasks
     async createTask(task) {
-        const result = await this.collection.insert(task); // Inserts a task into the database
-        return result;
+        try {
+            const result = await this.collection.insertOne(task); // Inserts a task into the database
+            return result;
+        } catch (error) {
+            // Error Handling
+            if (error.code === 11000) {
+                throw new Error('Task with this ID or title already exists');
+            } else {
+                console.error("Error creating task: ", error);
+                throw error;
+            }
+        }
     }
 
     // Retrieve Tasks from the database
