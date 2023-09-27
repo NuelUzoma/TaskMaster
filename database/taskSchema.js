@@ -42,7 +42,7 @@ class TaskSchema {
 
     // Create Task definiton to create tasks
     async createTask(task) {
-        const result = await this.collection.insertMany(task); // Inserts a task into the database
+        const result = await this.collection.insert(task); // Inserts a task into the database
         return result;
     }
 
