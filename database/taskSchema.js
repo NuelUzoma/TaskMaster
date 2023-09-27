@@ -14,48 +14,6 @@ const newTasks = [ // An array of sample tasks to test the tasks collection
         title: 'Complete Task 2',
         description: 'Finish the first task on the task list',
         completed: false
-    },
-    {
-        id: 21,
-        title: 'Round-Up Specializations Project',
-        description: 'Complete the final project for ALX Africa',
-        completed: false
-    },
-    {
-        id: 22,
-        title: 'Purchase Groceries',
-        description: 'Purchase groceries from the market',
-        completed: false
-    },
-    {
-        id: 23,
-        title: 'Morning Exercise',
-        description: 'Complete 30 min workout every morning',
-        completed: false
-    },
-    {
-        id: 24,
-        title: 'School Resumption',
-        description: 'Resume with school activities in a shortwhile',
-        completed: false
-    },
-    {
-        id: 25,
-        title: 'Write Blog Post',
-        description: 'Complete an extensive blog post for this TaskMaster project',
-        completed: false
-    },
-    {
-        id: 26,
-        title: 'Comprehensive README.md',
-        description: 'Complete a comprehensive README.md for this project',
-        completed: false
-    },
-    {
-        id: 27,
-        title: 'Test',
-        description: 'Testing',
-        completed: false
     }
 ];
 
@@ -67,7 +25,6 @@ class TaskSchema {
             this.db = client.db('taskmaster');
             this.collection = this.db.collection('tasks');
             console.log("Connected to MongoDB Server");
-            return this.collection.insertMany(newTasks);
         }).catch((error) => { // On error, it should throw an error
             console.error(error);
         });
@@ -85,7 +42,7 @@ class TaskSchema {
 
     // Create Task definiton to create tasks
     async createTask(task) {
-        const result = await this.collection.insertOne(task); // Inserts a task into the database
+        const result = await this.collection.insertMany(task); // Inserts a task into the database
         return result;
     }
 

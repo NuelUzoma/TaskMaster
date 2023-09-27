@@ -3,14 +3,9 @@ import TaskSchema from "../database/taskSchema.js";
 class CreateTask {
     static async create(req, res) { // Callback POST method to create a task
         try {
+            const task = req.body;
             const taskModel = new TaskSchema(); // Instantiate the task schema
             await taskModel.connect(); // Connect to the database
-            const task = { // Task to be created to the database
-                id: 30,
-                title: 'Test the Create Function Again',
-                description: 'Testing the Create CRUD Function',
-                completed: true
-            }
             await taskModel.createTask(task);
             await taskModel.close(); // Close the database connection
             res.status(200).json({
