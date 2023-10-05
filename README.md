@@ -107,7 +107,7 @@ To use the TaskMaster API, you can make HTTP requests to the provided endpoints.
   - `PUT /api/tasks/update/:id`: Update a task by ID.
   - `DELETE /api/tasks/delete/:id`: Delete a task by ID.
 
-For detailed Project, API documentation and usage examples, refer to the [Project Documentation](https://docs.google.com/document/d/1Rc0edCQLR3FAB4mGsLy4QO2nAt85QZP-zkpg4tywLTs/edit).
+For detailed API documentation and usage examples, refer to the [API Documentation](https://documenter.getpostman.com/view/27344999/2s9YJeyLhA).
 
 ## Testing
 
