@@ -61,13 +61,13 @@ class RegisterUser {
             }
             // JWT Authentication for successful user login.
             const sec_key = process.env.JWT_SECRET;
-            const token = Jwt.sign( // Generate a token for signing in
+            Jwt.sign( // Generate a token for signing in but wont be displayed for security purposes
                 { userId: user._id },
                 sec_key,
                 { expiresIn: '1h'}
                 );
             res.status(200).json({
-                token
+                message: 'Login Successful'
             });
             await userData.close(); // Close the database connection
         } catch (error) {
